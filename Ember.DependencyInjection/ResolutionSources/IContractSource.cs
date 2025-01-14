@@ -1,8 +1,14 @@
-﻿
+﻿namespace Ember.DependencyInjection;
 
-namespace Ember.DependencyInjection.ResolutionSources;
-
-internal interface IContractSource<out TContract> where TContract : notnull
+/// <summary>
+/// Defines the source for an instance used in a <see cref="Contract{T}"/>.
+/// </summary>
+/// <typeparam name="T">The type of the contract.</typeparam>
+internal interface IContractSource<out T> where T : notnull
 {
-  public TContract Resolve(IActivator activator);
+  /// <summary>
+  /// Resolves an instance of type <typeparamref name="T"/>.
+  /// </summary>
+  /// <param name="activator">The activator used to create the instance.</param>
+  T Resolve(IActivator activator);
 }

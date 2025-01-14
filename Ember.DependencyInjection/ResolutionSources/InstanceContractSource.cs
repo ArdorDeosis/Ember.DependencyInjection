@@ -1,17 +1,21 @@
-﻿
+﻿namespace Ember.DependencyInjection;
 
-namespace Ember.DependencyInjection.ResolutionSources;
-
-internal class InstanceContractSource<TContract> : IContractSource<TContract>, IDisposable where TContract : notnull
+/// <summary>
+/// Resolves to an existing instance.
+/// </summary>
+/// <inheritdoc cref="IContractSource{T}" />
+internal class InstanceContractSource<T> : IContractSource<T>, IDisposable where T : notnull
 {
-  private readonly TContract instance;
+  private readonly T instance;
 
-  public InstanceContractSource(TContract instance)
+  public InstanceContractSource(T instance)
   {
     this.instance = instance;
   }
 
-  public TContract Resolve(IActivator _) => instance;
-  
+  /// <inheritdoc />
+  public T Resolve(IActivator _) => instance;
+
+  /// <inheritdoc />
   public void Dispose() => (instance as IDisposable)?.Dispose();
 }

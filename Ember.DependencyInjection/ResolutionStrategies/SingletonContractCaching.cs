@@ -1,14 +1,17 @@
-﻿using Ember.DependencyInjection.ResolutionSources;
+﻿namespace Ember.DependencyInjection;
 
-namespace Ember.DependencyInjection.ResolutionStrategies;
-
-internal class SingletonContractResolution<TContract> : IContractResolutionStrategy<TContract>, IDisposable where TContract : notnull
+/// <summary>
+/// Singleton instance caching strategy.
+/// </summary>
+/// <inheritdoc cref="IContractCachingStrategy{T}" />
+internal class SingletonContractCaching<T> : IContractCachingStrategy<T>, IDisposable where T : notnull
 {
   private readonly Lock lockObject = new();
   private volatile bool hasResolved;
-  private TContract instance = default!;
+  private T instance = default!;
 
-  public TContract Resolve(IActivator activator, IContractSource<TContract> contractSource)
+  /// <inheritdoc />
+  public T Resolve(IActivator activator, IContractSource<T> contractSource)
   {
     if (!hasResolved)
     {
@@ -30,5 +33,6 @@ internal class SingletonContractResolution<TContract> : IContractResolutionStrat
     return instance;
   }
 
+  /// <inheritdoc />
   public void Dispose() => (instance as IDisposable)?.Dispose();
 }

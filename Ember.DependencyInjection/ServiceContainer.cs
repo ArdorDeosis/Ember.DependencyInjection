@@ -1,10 +1,9 @@
 ﻿using System.Reflection;
-using Ember.DependencyInjection.Configuration;
-using Ember.DependencyInjection.Exceptions;
 
 namespace Ember.DependencyInjection;
 
-public class ServiceContainer : IActivator
+/// <inheritdoc />
+internal class ServiceContainer : IActivator
 {
   private readonly DependencyResolver resolver;
 
@@ -14,14 +13,15 @@ public class ServiceContainer : IActivator
     resolver = new DependencyResolver(registry.MakeContractSet(this));
   }
 
+  /// <inheritdoc />
   public T CreateInstance<T>()
   {
     // TODO: enhance constructor selection
     if (typeof(T).GetConstructors() is not { Length: > 0 } constructors)
-      throw new DependencyResolutionException($"Cannot create an instance of type {typeof(T).FullName}");
+      throw new ArgumentException($"Cannot create an instance of type {typeof(T).FullName}; the type has no public constructor.");
 
     var constructor = constructors
-      .OrderByDescending(c => c.GetParameters().Length)
+      .OrderByDescending(constructorInfo => constructorInfo.GetParameters().Length)
       .First();
 
     try
@@ -29,36 +29,48 @@ public class ServiceContainer : IActivator
       var parameters = ResolveParameterList(constructor);
       return (T)constructor.Invoke(parameters);
     }
-    catch (Exception exception)
+    catch (Exception exception) when (exception is not DependencyResolutionException)
     {
       throw new DependencyResolutionException(
         $"Failed to create instance of type {typeof(T).FullName}. See inner exception for more information", exception);
     }
   }
 
+  /// <inheritdoc />
   public T ExecuteMethod<T>(Delegate factoryMethod)
   {
+    ArgumentNullException.ThrowIfNull(factoryMethod);
     if (factoryMethod.Method.ReturnType != typeof(T))
-      throw new Exception($"delegate has wrong return type"); // TODO exception type
+      throw new ArgumentException($"Delegate has wrong return type. Expected return type {typeof(T).FullName}.");
 
     try
     {
       var parameters = ResolveParameterList(factoryMethod.Method);
       return (T)factoryMethod.DynamicInvoke(parameters)!;
     }
-    catch (Exception exception)
+    catch (Exception exception) when (exception is not DependencyResolutionException)
     {
       throw new DependencyResolutionException(
         $"Failed to create instance of type {typeof(T).FullName}. See inner exception for more information", exception);
     }
   }
 
+  /// <inheritdoc />
   public T Resolve<T>()
   {
-    var instance = resolver.Resolve(typeof(T));
-    if (instance.GetType().IsAssignableTo(typeof(T)))
-      return (T)instance;
-    throw new DependencyResolutionException($"Cannot resolve type {typeof(T).FullName}");
+    try
+    {
+      var instance = resolver.Resolve(typeof(T));
+      if (instance.GetType().IsAssignableTo(typeof(T)))
+        return (T)instance;
+      throw new DependencyResolutionException(
+        $"Resolved instance is not assignable to resolved type {typeof(T).FullName}");
+    }
+    catch (Exception exception) when (exception is not DependencyResolutionException)
+    {
+      throw new DependencyResolutionException(
+        $"Failed to create instance of type {typeof(T).FullName}. See inner exception for more information", exception);
+    }
   }
 
   private object[] ResolveParameterList(MethodBase method) =>
