@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Ember.DependencyInjection</id>
+    <authors>Theobald Beyer</authors>
+    <owners>Theobald Beyer</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>C# dependency injection framework</description>
+    <copyright>© 2025 Theobald Beyer. All rights reserved.</copyright>
+  </metadata>
+</package>

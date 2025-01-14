@@ -1,0 +1,44 @@
+name: Publish Package to NuGet
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.x'
+
+      - name: Restore Dependencies
+        run: dotnet restore
+
+      - name: Run Tests
+        run: dotnet test --configuration Release
+
+      - name: Get Version
+        id: get_version
+        run: |
+          VERSION=$(dotnet msbuild ./Ember.DependencyInjection/Ember.DependencyInjection.csproj -t:GetPackageVersion -nologo | grep -oP '[^\s]+')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Pack
+        run: dotnet pack ./Ember.DependencyInjection/Ember.DependencyInjection.csproj --configuration Release --output ./packages
+
+      - name: Push to NuGet
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push ./packages/Ember.DependencyInjection.${{ env.VERSION }}.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+
+      - name: Set Version Tag
+        run: |
+          git tag v${{ env.VERSION }}
+          git push origin v${{ env.VERSION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

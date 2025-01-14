@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/ArdorDeosis/Ember.DependencyInjection</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Ember.DependencyInjection.Abstraction\Ember.DependencyInjection.Abstraction.csproj" />
+  </ItemGroup>
+  
+</Project>
