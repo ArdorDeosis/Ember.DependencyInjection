@@ -69,7 +69,7 @@ internal class DependencyResolver
   /// When this method returns, contains an array of resolved instances, if successful; otherwise, <c>null</c>.
   /// </param>
   /// <returns><c>true</c> if a collection of instances is resolved; otherwise, <c>false</c>.</returns>
-  private bool TryResolveCollection(Type collectionType, [NotNullWhen(true)] out object[]? instances)
+  private bool TryResolveCollection(Type collectionType, [NotNullWhen(true)] out Array? instances)
   {
     instances = null;
     return IsCollectionType(collectionType, out var itemType) && TryResolveAll(itemType, out instances);
@@ -84,16 +84,18 @@ internal class DependencyResolver
   /// When this method returns, contains an array of resolved instances, if successful; otherwise, <c>null</c>.
   /// </param>
   /// <returns><c>true</c> if all instances of the specified type are resolved; otherwise, <c>false</c>.</returns>
-  private bool TryResolveAll(Type type, [NotNullWhen(true)] out object[]? instances)
+  private bool TryResolveAll(Type type, [NotNullWhen(true)] out Array? instances)
   {
     var contractList = contracts.Get(type);
     if (contractList.Any())
     {
-      instances = contractList
+      instances = Array.CreateInstance(type, contractList.Count);
+      contractList
         .Select(contract => contract.Resolve())
-        .ToArray();
+        .ToArray().CopyTo(instances, 0);
       return true;
     }
+
     instances = null;
     return false;
   }
