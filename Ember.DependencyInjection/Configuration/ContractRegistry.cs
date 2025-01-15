@@ -24,14 +24,14 @@ internal class ContractRegistry
   }
   
   /// <summary>
-  /// Creates a <see cref="ContractSet"/> from the registered contracts with the specified activator.
+  /// Creates a <see cref="ContractSet"/> from the registered contracts with the specified <see cref="IInjector"/>.
   /// </summary>
-  /// <param name="activator">The activator used by the created contracts.</param>
-  public ContractSet MakeContractSet(IActivator activator) =>
+  /// <param name="injector">The injector used by the created contracts.</param>
+  public ContractSet MakeContractSet(IInjector injector) =>
     new(contracts.ToFrozenDictionary(
       entry => entry.Key,
       entry => entry.Value
-        .Select(contractConfiguration => ((dynamic)contractConfiguration).BuildContract(activator))
+        .Select(contractConfiguration => ((dynamic)contractConfiguration).BuildContract(injector))
         .Cast<IContract>()
         .ToArray()));
 }

@@ -9,13 +9,13 @@ public class MultiBindingTests
   public void MultiBinding_ResolveSingle_ResolvesFirst()
   {
     // ARRANGE
-    var configuration = new ContainerConfiguration();
+    var configuration = new InjectorConfiguration();
     configuration.Bind<IService>().To<ServiceA>();
     configuration.Bind<IService>().To<ServiceB>();
-    var activator = configuration.BuildContainer();
+    var injector = configuration.BuildInjector();
     
     // ACT
-    var instance = activator.Resolve<IService>();
+    var instance = injector.Resolve<IService>();
     
     // ASSERT
     instance.Should().BeOfType<ServiceA>();
@@ -26,13 +26,13 @@ public class MultiBindingTests
   public void MultiBinding_ResolveEnumerable_ResolvesAll()
   {
     // ARRANGE
-    var configuration = new ContainerConfiguration();
+    var configuration = new InjectorConfiguration();
     configuration.Bind<IService>().To<ServiceA>();
     configuration.Bind<IService>().To<ServiceB>();
-    var activator = configuration.BuildContainer();
+    var injector = configuration.BuildInjector();
     
     // ACT
-    var instances = activator.Resolve<IEnumerable<IService>>().ToArray();
+    var instances = injector.Resolve<IEnumerable<IService>>().ToArray();
     
     // ASSERT
     instances.Should().HaveCount(2);
@@ -44,13 +44,13 @@ public class MultiBindingTests
   public void MultiBinding_ResolveReadOnlyCollection_ResolvesAll()
   {
     // ARRANGE
-    var configuration = new ContainerConfiguration();
+    var configuration = new InjectorConfiguration();
     configuration.Bind<IService>().To<ServiceA>();
     configuration.Bind<IService>().To<ServiceB>();
-    var activator = configuration.BuildContainer();
+    var injector = configuration.BuildInjector();
     
     // ACT
-    var instances = activator.Resolve<IReadOnlyCollection<IService>>().ToArray();
+    var instances = injector.Resolve<IReadOnlyCollection<IService>>().ToArray();
     
     // ASSERT
     instances.Should().HaveCount(2);
@@ -62,13 +62,13 @@ public class MultiBindingTests
   public void MultiBinding_ResolveReadOnlyList_ResolvesAll()
   {
     // ARRANGE
-    var configuration = new ContainerConfiguration();
+    var configuration = new InjectorConfiguration();
     configuration.Bind<IService>().To<ServiceA>();
     configuration.Bind<IService>().To<ServiceB>();
-    var activator = configuration.BuildContainer();
+    var injector = configuration.BuildInjector();
     
     // ACT
-    var instances = activator.Resolve<IReadOnlyList<IService>>().ToArray();
+    var instances = injector.Resolve<IReadOnlyList<IService>>().ToArray();
     
     // ASSERT
     instances.Should().HaveCount(2);
@@ -80,12 +80,12 @@ public class MultiBindingTests
   public void SingleBinding_ResolveEnumerable_ResolvesCollection()
   {
     // ARRANGE
-    var configuration = new ContainerConfiguration();
+    var configuration = new InjectorConfiguration();
     configuration.Bind<IService>().To<ServiceA>();
-    var activator = configuration.BuildContainer();
+    var injector = configuration.BuildInjector();
     
     // ACT
-    var instances = activator.Resolve<IReadOnlyList<IService>>().ToArray();
+    var instances = injector.Resolve<IReadOnlyList<IService>>().ToArray();
     
     // ASSERT
     instances.Should().HaveCount(1);
@@ -97,10 +97,10 @@ public class MultiBindingTests
   public void NoBinding_ResolveEnumerable_Throws()
   {
     // ARRANGE
-    var activator = new ContainerConfiguration().BuildContainer();
+    var injector = new InjectorConfiguration().BuildInjector();
     
     // ACT
-    var action = () => activator.Resolve<IEnumerable<IService>>();
+    var action = () => injector.Resolve<IEnumerable<IService>>();
     
     // ASSERT
     action.Should().Throw<DependencyResolutionException>();

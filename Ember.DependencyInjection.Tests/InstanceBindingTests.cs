@@ -9,13 +9,13 @@ public class InstanceBindingTests
   public void InstanceBinding_ResolvesInstance()
   {
     // ARRANGE
-    var configuration = new ContainerConfiguration();
+    var configuration = new InjectorConfiguration();
     var instance = new ServiceA();
     configuration.Bind<IService>().ToInstance(instance);
-    var activator = configuration.BuildContainer();
+    var injector = configuration.BuildInjector();
     
     // ACT
-    var resolvedInstance = activator.Resolve<IService>();
+    var resolvedInstance = injector.Resolve<IService>();
     
     // ASSERT
     resolvedInstance.Should().Be(instance);

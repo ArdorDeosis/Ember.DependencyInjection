@@ -9,13 +9,13 @@ public class CachingTests
   public void TransientCaching_CreatesNewInstances()
   {
     // ARRANGE
-    var configuration = new ContainerConfiguration();
+    var configuration = new InjectorConfiguration();
     configuration.Bind<ServiceA>().AsTransient();
-    var activator = configuration.BuildContainer();
+    var injector = configuration.BuildInjector();
 
     // ACT
-    var instance1 = activator.Resolve<ServiceA>();
-    var instance2 = activator.Resolve<ServiceA>();
+    var instance1 = injector.Resolve<ServiceA>();
+    var instance2 = injector.Resolve<ServiceA>();
     
     // ASSERT
     instance1.Should().NotBe(instance2);
@@ -25,13 +25,13 @@ public class CachingTests
   public void SingletonCaching_ReturnsSameInstance()
   {
     // ARRANGE
-    var configuration = new ContainerConfiguration();
+    var configuration = new InjectorConfiguration();
     configuration.Bind<ServiceA>().AsSingleton();
-    var activator = configuration.BuildContainer();
+    var injector = configuration.BuildInjector();
 
     // ACT
-    var instance1 = activator.Resolve<ServiceA>();
-    var instance2 = activator.Resolve<ServiceA>();
+    var instance1 = injector.Resolve<ServiceA>();
+    var instance2 = injector.Resolve<ServiceA>();
     
     // ASSERT
     instance1.Should().Be(instance2);

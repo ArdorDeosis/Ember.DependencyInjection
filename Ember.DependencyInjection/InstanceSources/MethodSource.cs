@@ -1,7 +1,7 @@
 ﻿namespace Ember.DependencyInjection;
 
 /// <summary>
-/// Produces a new instance from a factory method. Input parameters are resolved from the used <see cref="IActivator"/>.
+/// Produces a new instance from a factory method. Input parameters are resolved from the used <see cref="IInjector"/>.
 /// </summary>
 /// <inheritdoc />
 internal class MethodSource<T> : IInstanceSource<T>
@@ -17,5 +17,5 @@ internal class MethodSource<T> : IInstanceSource<T>
   }
 
   /// <inheritdoc />
-  public T Resolve(IActivator activator) => activator.ExecuteMethod<T>(factoryMethod);
+  public T Resolve(IInjector injector) => injector.ExecuteMethod<T>(factoryMethod);
 }

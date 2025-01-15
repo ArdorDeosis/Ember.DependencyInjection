@@ -3,14 +3,14 @@
 namespace Ember.DependencyInjection;
 
 /// <inheritdoc />
-internal class ServiceContainer : IActivator
+internal class Injector : IInjector
 {
   private readonly DependencyResolver resolver;
   private readonly CachedConstructorSelector constructorSelector;
 
-  internal ServiceContainer(ContractRegistry registry, ConstructorSelector constructorSelector)
+  internal Injector(ContractRegistry registry, ConstructorSelector constructorSelector)
   {
-    registry.Add<IActivator>().ToInstance(this);
+    registry.Add<IInjector>().ToInstance(this);
     resolver = new DependencyResolver(registry.MakeContractSet(this));
     this.constructorSelector = new CachedConstructorSelector(constructorSelector);
   }

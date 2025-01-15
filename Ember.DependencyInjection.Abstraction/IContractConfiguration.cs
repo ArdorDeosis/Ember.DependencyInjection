@@ -3,9 +3,9 @@
 namespace Ember.DependencyInjection;
 
 /// <summary>
-/// A type contract for the DI container.
+/// A type contract for the injector.
 /// </summary>
-/// <typeparam name="TContract">The type bound to the container.</typeparam>
+/// <typeparam name="TContract">The type bound in the injector.</typeparam>
 /// <remarks>
 /// By default, the bound type is bound to itself with a transient resolution strategy.
 /// To change this, use the fluent setup interface on this type.

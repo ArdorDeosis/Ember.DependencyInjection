@@ -6,7 +6,7 @@ namespace Ember.DependencyInjection;
 /// Provides functionality to create instances of types.
 /// </summary>
 [PublicAPI]
-public interface IActivator
+public interface IInjector
 {
   /// <summary>
   /// Creates an instance of the specified type.

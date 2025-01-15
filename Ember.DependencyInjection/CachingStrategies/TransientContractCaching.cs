@@ -7,5 +7,5 @@
 internal class TransientContractCaching<T> : IContractCachingStrategy<T> where T : notnull
 {
   /// <inheritdoc />
-  public T Resolve(IActivator activator, IInstanceSource<T> instanceSource) => instanceSource.Resolve(activator);
+  public T Resolve(IInjector injector, IInstanceSource<T> instanceSource) => instanceSource.Resolve(injector);
 }

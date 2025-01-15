@@ -9,10 +9,10 @@ public class ConstructorResolutionTests
   public void CreateInstance_UsesImplicitParameterlessConstructor()
   {
     // ARRANGE
-    var activator = new ContainerConfiguration().BuildContainer();
+    var injector = new InjectorConfiguration().BuildInjector();
     
     // ACT
-    var testObject = activator.CreateInstance<ConstructorTestObjectA>();
+    var testObject = injector.CreateInstance<ConstructorTestObjectA>();
 
     // ASSERT
     testObject.UsedCorrectConstructor.Should().BeTrue();
@@ -22,10 +22,10 @@ public class ConstructorResolutionTests
   public void CreateInstance_UsesExplicitConstructor()
   {
     // ARRANGE
-    var activator = new ContainerConfiguration().BuildContainer();
+    var injector = new InjectorConfiguration().BuildInjector();
     
     // ACT
-    var testObject = activator.CreateInstance<ConstructorTestObjectB>();
+    var testObject = injector.CreateInstance<ConstructorTestObjectB>();
 
     // ASSERT
     testObject.UsedCorrectConstructor.Should().BeTrue();
@@ -35,12 +35,12 @@ public class ConstructorResolutionTests
   public void CreateInstance_PrefersConstructorWithMoreParameters()
   {
     // ARRANGE
-    var configuration = new ContainerConfiguration();
+    var configuration = new InjectorConfiguration();
     configuration.Bind<ServiceA>();
-    var activator = configuration.BuildContainer();
+    var injector = configuration.BuildInjector();
     
     // ACT
-    var testObject = activator.CreateInstance<ConstructorTestObjectC>();
+    var testObject = injector.CreateInstance<ConstructorTestObjectC>();
 
     // ASSERT
     testObject.UsedCorrectConstructor.Should().BeTrue();
@@ -50,13 +50,13 @@ public class ConstructorResolutionTests
   public void CreateInstance_IgnoresNonPublicConstructors()
   {
     // ARRANGE
-    var configuration = new ContainerConfiguration();
+    var configuration = new InjectorConfiguration();
     configuration.Bind<ServiceA>();
     configuration.Bind<ServiceB>();
-    var activator = configuration.BuildContainer();
+    var injector = configuration.BuildInjector();
     
     // ACT
-    var testObject = activator.CreateInstance<ConstructorTestObjectD>();
+    var testObject = injector.CreateInstance<ConstructorTestObjectD>();
 
     // ASSERT
     testObject.UsedCorrectConstructor.Should().BeTrue();
@@ -66,10 +66,10 @@ public class ConstructorResolutionTests
   public void CreateInstance_PrefersConstructorWithAttribute()
   {
     // ARRANGE
-    var activator = new ContainerConfiguration().BuildContainer();
+    var injector = new InjectorConfiguration().BuildInjector();
     
     // ACT
-    var testObject = activator.CreateInstance<ConstructorTestObjectE>();
+    var testObject = injector.CreateInstance<ConstructorTestObjectE>();
 
     // ASSERT
     testObject.UsedCorrectConstructor.Should().BeTrue();
@@ -79,16 +79,16 @@ public class ConstructorResolutionTests
   public void CreateInstance_CustomConstructorSelection()
   {
     // ARRANGE
-    var configuration = new ContainerConfiguration
+    var configuration = new InjectorConfiguration
     {
       // get parameterless ctor
       ConstructorSelectionStrategy = type => 
         type.GetConstructors().First(ctor => ctor.GetParameters().Length is 0),
     };
-    var activator = configuration.BuildContainer();
+    var injector = configuration.BuildInjector();
     
     // ACT
-    var testObject = activator.CreateInstance<ConstructorTestObjectF>();
+    var testObject = injector.CreateInstance<ConstructorTestObjectF>();
 
     // ASSERT
     testObject.UsedCorrectConstructor.Should().BeTrue();

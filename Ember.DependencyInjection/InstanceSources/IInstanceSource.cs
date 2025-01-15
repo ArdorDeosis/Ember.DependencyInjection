@@ -9,6 +9,6 @@ internal interface IInstanceSource<out T> where T : notnull
   /// <summary>
   /// Resolves an instance of type <typeparamref name="T"/>.
   /// </summary>
-  /// <param name="activator">The activator used to create the instance.</param>
-  T Resolve(IActivator activator);
+  /// <param name="injector">The injector used to resolve dependencies in the instance.</param>
+  T Resolve(IInjector injector);
 }

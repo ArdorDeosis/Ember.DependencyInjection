@@ -3,10 +3,10 @@
 namespace Ember.DependencyInjection;
 
 /// <summary>
-/// Provides methods for configuring the DI container.
+/// Provides methods for configuring an injector.
 /// </summary>
 [PublicAPI]
-public interface IContainerConfiguration
+public interface IInjectorConfiguration
 {
   /// <summary>
   /// Sets the constructor selection strategy.
@@ -16,13 +16,13 @@ public interface IContainerConfiguration
   /// <summary>
   /// Begins the binding process for the specified contract type.
   /// </summary>
-  /// <typeparam name="TContract">The type to be bound in the container.</typeparam>
+  /// <typeparam name="TContract">The type to be bound in the injector.</typeparam>
   /// <returns>An interface to further configure the contract binding.</returns>
   IContractConfiguration<TContract> Bind<TContract>() where TContract : notnull;
 
   /// <summary>
-  /// Builds the dependency injection container.
+  /// Builds the injector from this configuration.
   /// </summary>
-  /// <returns>An instance of <see cref="IActivator"/> that can be used to resolve dependencies.</returns>
-  IActivator BuildContainer();
+  /// <returns>An instance of <see cref="IInjector"/> that can be used to resolve dependencies.</returns>
+  IInjector BuildInjector();
 }

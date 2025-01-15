@@ -6,13 +6,13 @@
 /// <typeparam name="T">The type of the instance to resolve. Must be a non-nullable type.</typeparam>
 internal class Contract<T> : IContract, IDisposable where T : notnull
 {
-  private readonly IActivator activator;
+  private readonly IInjector injector;
   private readonly IInstanceSource<T> instanceSource;
   private readonly IContractCachingStrategy<T> contractCachingStrategy;
 
-  public Contract(IActivator activator, IInstanceSource<T> instanceSource, IContractCachingStrategy<T> contractCachingStrategy)
+  public Contract(IInjector injector, IInstanceSource<T> instanceSource, IContractCachingStrategy<T> contractCachingStrategy)
   {
-    this.activator = activator;
+    this.injector = injector;
     this.instanceSource = instanceSource;
     this.contractCachingStrategy = contractCachingStrategy;
   }
@@ -20,7 +20,7 @@ internal class Contract<T> : IContract, IDisposable where T : notnull
   /// <summary>
   /// Resolves the contract.
   /// </summary>
-  public T Resolve() => contractCachingStrategy.Resolve(activator, instanceSource);
+  public T Resolve() => contractCachingStrategy.Resolve(injector, instanceSource);
 
   /// <inheritdoc />
   object IContract.Resolve() => Resolve();

@@ -14,7 +14,7 @@ internal class ReferenceSource<T> : IInstanceSource<T>, IDisposable where T : no
   }
 
   /// <inheritdoc />
-  public T Resolve(IActivator _) => instance;
+  public T Resolve(IInjector _) => instance;
 
   /// <inheritdoc />
   public void Dispose() => (instance as IDisposable)?.Dispose();
