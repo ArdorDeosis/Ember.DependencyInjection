@@ -1,6 +1,12 @@
 # Ember Dependency Injection
 
+A C# dependency injection framework.
+
+# Why?
+
 I wrote this dependency Injection Framework to learn and to have a mental workout.
+
+# Disclaimer
 
 It is not thoroughly tested, has not a lot of features and might not be highly performant. It is public only because there is no reason not to have it public 🎉
 

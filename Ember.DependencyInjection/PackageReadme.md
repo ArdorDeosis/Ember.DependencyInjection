@@ -1,0 +1,1 @@
+Implementation of `Ember.DependencyInjection`. See repository for more information.
