@@ -4,7 +4,7 @@ A C# dependency injection framework.
 
 # Why?
 
-I wrote this dependency Injection Framework to learn and to have a mental workout.
+I wrote this dependency injection framework to learn and to have a mental workout.
 
 # Disclaimer
 
