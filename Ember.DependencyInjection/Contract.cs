@@ -7,20 +7,20 @@
 internal class Contract<T> : IContract, IDisposable where T : notnull
 {
   private readonly IActivator activator;
-  private readonly IContractSource<T> contractSource;
+  private readonly IInstanceSource<T> instanceSource;
   private readonly IContractCachingStrategy<T> contractCachingStrategy;
 
-  public Contract(IActivator activator, IContractSource<T> contractSource, IContractCachingStrategy<T> contractCachingStrategy)
+  public Contract(IActivator activator, IInstanceSource<T> instanceSource, IContractCachingStrategy<T> contractCachingStrategy)
   {
     this.activator = activator;
-    this.contractSource = contractSource;
+    this.instanceSource = instanceSource;
     this.contractCachingStrategy = contractCachingStrategy;
   }
 
   /// <summary>
   /// Resolves the contract.
   /// </summary>
-  public T Resolve() => contractCachingStrategy.Resolve(activator, contractSource);
+  public T Resolve() => contractCachingStrategy.Resolve(activator, instanceSource);
 
   /// <inheritdoc />
   object IContract.Resolve() => Resolve();
@@ -28,7 +28,7 @@ internal class Contract<T> : IContract, IDisposable where T : notnull
   /// <inheritdoc />
   public void Dispose()
   {
-    (contractSource as IDisposable)?.Dispose();
+    (instanceSource as IDisposable)?.Dispose();
     (contractCachingStrategy as IDisposable)?.Dispose();
   }
 }

@@ -4,7 +4,7 @@
 /// Produces a new instance from the type's constructor.
 /// </summary>
 /// <inheritdoc />
-internal class ConstructorContractSource<TContract, TImplementation> : IContractSource<TContract>
+internal class ConstructorSource<TContract, TImplementation> : IInstanceSource<TContract>
   where TImplementation : TContract where TContract : notnull
 {
   /// <inheritdoc />

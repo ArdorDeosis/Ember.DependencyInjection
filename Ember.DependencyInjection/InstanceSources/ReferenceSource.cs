@@ -3,12 +3,12 @@
 /// <summary>
 /// Resolves to an existing instance.
 /// </summary>
-/// <inheritdoc cref="IContractSource{T}" />
-internal class InstanceContractSource<T> : IContractSource<T>, IDisposable where T : notnull
+/// <inheritdoc cref="IInstanceSource{T}" />
+internal class ReferenceSource<T> : IInstanceSource<T>, IDisposable where T : notnull
 {
   private readonly T instance;
 
-  public InstanceContractSource(T instance)
+  public ReferenceSource(T instance)
   {
     this.instance = instance;
   }

@@ -9,6 +9,11 @@ namespace Ember.DependencyInjection;
 public interface IContainerConfiguration
 {
   /// <summary>
+  /// Sets the constructor selection strategy.
+  /// </summary>
+  ConstructorSelector ConstructorSelectionStrategy { set; }
+
+  /// <summary>
   /// Begins the binding process for the specified contract type.
   /// </summary>
   /// <typeparam name="TContract">The type to be bound in the container.</typeparam>

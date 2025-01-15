@@ -6,23 +6,20 @@ namespace Ember.DependencyInjection;
 internal class ServiceContainer : IActivator
 {
   private readonly DependencyResolver resolver;
+  private readonly CachedConstructorSelector constructorSelector;
 
-  internal ServiceContainer(ContractRegistry registry)
+  internal ServiceContainer(ContractRegistry registry, ConstructorSelector constructorSelector)
   {
     registry.Add<IActivator>().ToInstance(this);
     resolver = new DependencyResolver(registry.MakeContractSet(this));
+    this.constructorSelector = new CachedConstructorSelector(constructorSelector);
   }
 
   /// <inheritdoc />
   public T CreateInstance<T>()
   {
-    // TODO: enhance constructor selection
-    if (typeof(T).GetConstructors() is not { Length: > 0 } constructors)
+    if (constructorSelector.GetConstructor(typeof(T)) is not {} constructor)
       throw new ArgumentException($"Cannot create an instance of type {typeof(T).FullName}; the type has no public constructor.");
-
-    var constructor = constructors
-      .OrderByDescending(constructorInfo => constructorInfo.GetParameters().Length)
-      .First();
 
     try
     {

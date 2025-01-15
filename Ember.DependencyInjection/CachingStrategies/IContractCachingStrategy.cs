@@ -10,6 +10,6 @@ internal interface IContractCachingStrategy<T> where T : notnull
   /// Resolves an instance of type <typeparamref name="T"/>.
   /// </summary>
   /// <param name="activator">The activator used to resolve the instances.</param>
-  /// <param name="contractSource">The source producing the instance.</param>
-  T Resolve(IActivator activator, IContractSource<T> contractSource);
+  /// <param name="instanceSource">The source producing the instance.</param>
+  T Resolve(IActivator activator, IInstanceSource<T> instanceSource);
 }

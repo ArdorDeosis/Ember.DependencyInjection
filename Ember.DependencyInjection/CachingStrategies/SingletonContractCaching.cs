@@ -11,7 +11,7 @@ internal class SingletonContractCaching<T> : IContractCachingStrategy<T>, IDispo
   private T instance = default!;
 
   /// <inheritdoc />
-  public T Resolve(IActivator activator, IContractSource<T> contractSource)
+  public T Resolve(IActivator activator, IInstanceSource<T> instanceSource)
   {
     if (!hasResolved)
     {
@@ -20,7 +20,7 @@ internal class SingletonContractCaching<T> : IContractCachingStrategy<T>, IDispo
       {
         if (!hasResolved)
         {
-          instance = contractSource.Resolve(activator);
+          instance = instanceSource.Resolve(activator);
           hasResolved = true;
         }
       }

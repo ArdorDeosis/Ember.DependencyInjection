@@ -7,14 +7,11 @@ public class ContainerConfiguration : IContainerConfiguration
 {
   private readonly ContractRegistry registry = new();
 
-  /// <summary>
-  /// Binds a contract to the container.
-  /// </summary>
-  /// <typeparam name="TContract">The type of the contract to bind.</typeparam>
-  /// <returns>The configuration for the specified contract. Can be used for further configuration.</returns>
-  /// <exception cref="ContainerConfigurationException">
-  /// Thrown when the bind attempt fails.
-  /// </exception>
+  /// <inheritdoc />
+  public ConstructorSelector ConstructorSelectionStrategy { private get; set; } = 
+    ConstructorSelectors.WithAttribute.Then(ConstructorSelectors.MostParameters);
+
+  /// <inheritdoc />
   /// <remarks>
   /// <see cref="IActivator"/> cannot be bound manually, as it will be automatically bound when
   /// <see cref="BuildContainer"/> is called.
@@ -37,5 +34,5 @@ public class ContainerConfiguration : IContainerConfiguration
   /// Builds the dependency injection container.
   /// </summary>
   /// <returns>An instance of <see cref="IActivator"/> that can be used to resolve dependencies.</returns>
-  public IActivator BuildContainer() => new ServiceContainer(registry);
+  public IActivator BuildContainer() => new ServiceContainer(registry, ConstructorSelectionStrategy);
 }

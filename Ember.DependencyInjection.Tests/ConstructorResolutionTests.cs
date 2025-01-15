@@ -61,4 +61,17 @@ public class ConstructorResolutionTests
     // ASSERT
     testObject.UsedCorrectConstructor.Should().BeTrue();
   }
+  
+  [Test]
+  public void CreateInstance_PrefersConstructorWithAttribute()
+  {
+    // ARRANGE
+    var activator = new ContainerConfiguration().BuildContainer();
+    
+    // ACT
+    var testObject = activator.CreateInstance<ConstructorTestObjectD>();
+
+    // ASSERT
+    testObject.UsedCorrectConstructor.Should().BeTrue();
+  }
 }
