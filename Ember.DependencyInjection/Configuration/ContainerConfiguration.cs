@@ -1,9 +1,12 @@
-﻿namespace Ember.DependencyInjection;
+﻿using JetBrains.Annotations;
+
+namespace Ember.DependencyInjection;
 
 /// <summary>
 /// Configuration object for a dependency injection container.
 /// </summary>
-public class ContainerConfiguration : IContainerConfiguration
+[PublicAPI]
+internal class ContainerConfiguration : IContainerConfiguration
 {
   private readonly ContractRegistry registry = new();
 
@@ -30,9 +33,6 @@ public class ContainerConfiguration : IContainerConfiguration
     }
   }
 
-  /// <summary>
-  /// Builds the dependency injection container.
-  /// </summary>
-  /// <returns>An instance of <see cref="IActivator"/> that can be used to resolve dependencies.</returns>
+  /// <inheritdoc />
   public IActivator BuildContainer() => new ServiceContainer(registry, ConstructorSelectionStrategy);
 }

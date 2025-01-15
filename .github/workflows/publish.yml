@@ -28,13 +28,17 @@ jobs:
           VERSION=$(dotnet msbuild ./Ember.DependencyInjection/Ember.DependencyInjection.csproj -t:GetPackageVersion -nologo | grep -oP '[^\s]+')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Pack
-        run: dotnet pack ./Ember.DependencyInjection/Ember.DependencyInjection.csproj --configuration Release --output ./packages
-
+      - name:
+        run: |
+          dotnet pack ./Ember.DependencyInjection/Ember.DependencyInjection.csproj --configuration Release --output ./packages
+          dotnet pack ./Ember.DependencyInjection.Abstraction/Ember.DependencyInjection.Abstraction.csproj --configuration Release --output ./packages
+          
       - name: Push to NuGet
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        run: dotnet nuget push ./packages/Ember.DependencyInjection.${{ env.VERSION }}.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+        run: |
+          dotnet nuget push "./packages/Ember.DependencyInjection.${{ env.VERSION }}.nupkg" --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+          dotnet nuget push "./packages/Ember.DependencyInjection.Abstraction.${{ env.VERSION }}.nupkg" --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
 
       - name: Set Version Tag
         run: |

@@ -1,8 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>Ember.DependencyInjection</RootNamespace>
+    <PackageReadmeFile>../README.md</PackageReadmeFile>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2024.3.0"/>
   </ItemGroup>
 </Project>
