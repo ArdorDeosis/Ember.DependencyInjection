@@ -69,7 +69,26 @@ public class ConstructorResolutionTests
     var activator = new ContainerConfiguration().BuildContainer();
     
     // ACT
-    var testObject = activator.CreateInstance<ConstructorTestObjectD>();
+    var testObject = activator.CreateInstance<ConstructorTestObjectE>();
+
+    // ASSERT
+    testObject.UsedCorrectConstructor.Should().BeTrue();
+  }
+  
+  [Test]
+  public void CreateInstance_CustomConstructorSelection()
+  {
+    // ARRANGE
+    var configuration = new ContainerConfiguration
+    {
+      // get parameterless ctor
+      ConstructorSelectionStrategy = type => 
+        type.GetConstructors().First(ctor => ctor.GetParameters().Length is 0),
+    };
+    var activator = configuration.BuildContainer();
+    
+    // ACT
+    var testObject = activator.CreateInstance<ConstructorTestObjectF>();
 
     // ASSERT
     testObject.UsedCorrectConstructor.Should().BeTrue();

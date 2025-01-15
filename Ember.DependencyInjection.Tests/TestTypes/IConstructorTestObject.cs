@@ -45,6 +45,7 @@ public class ConstructorTestObjectD : IConstructorTestObject
   protected ConstructorTestObjectD(ServiceB serviceB) { }
   internal ConstructorTestObjectD(ServiceA serviceA, ServiceB serviceB) { }
 }
+
 public class ConstructorTestObjectE : IConstructorTestObject
 {
   public bool UsedCorrectConstructor { get; }
@@ -56,4 +57,16 @@ public class ConstructorTestObjectE : IConstructorTestObject
   }
 
   public ConstructorTestObjectE(ServiceA serviceA) { }
+}
+
+public class ConstructorTestObjectF : IConstructorTestObject
+{
+  public bool UsedCorrectConstructor { get; }
+
+  public ConstructorTestObjectF()
+  {
+    UsedCorrectConstructor = true;
+  }
+
+  public ConstructorTestObjectF(ServiceA serviceA) { }
 }
