@@ -1,5 +1,4 @@
 ﻿using Ember.DependencyInjection.Tests.TestTypes;
-using FluentAssertions;
 
 namespace Ember.DependencyInjection.Tests;
 
@@ -10,27 +9,27 @@ public class ConstructorResolutionTests
   {
     // ARRANGE
     var injector = new InjectorConfiguration().BuildInjector();
-    
+
     // ACT
     var testObject = injector.CreateInstance<ConstructorTestObjectA>();
 
     // ASSERT
-    testObject.UsedCorrectConstructor.Should().BeTrue();
+    Assert.That(testObject.UsedCorrectConstructor, Is.True);
   }
-  
+
   [Test]
   public void CreateInstance_UsesExplicitConstructor()
   {
     // ARRANGE
     var injector = new InjectorConfiguration().BuildInjector();
-    
+
     // ACT
     var testObject = injector.CreateInstance<ConstructorTestObjectB>();
 
     // ASSERT
-    testObject.UsedCorrectConstructor.Should().BeTrue();
+    Assert.That(testObject.UsedCorrectConstructor, Is.True);
   }
-  
+
   [Test]
   public void CreateInstance_PrefersConstructorWithMoreParameters()
   {
@@ -38,14 +37,14 @@ public class ConstructorResolutionTests
     var configuration = new InjectorConfiguration();
     configuration.Bind<ServiceA>();
     var injector = configuration.BuildInjector();
-    
+
     // ACT
     var testObject = injector.CreateInstance<ConstructorTestObjectC>();
 
     // ASSERT
-    testObject.UsedCorrectConstructor.Should().BeTrue();
+    Assert.That(testObject.UsedCorrectConstructor, Is.True);
   }
-  
+
   [Test]
   public void CreateInstance_IgnoresNonPublicConstructors()
   {
@@ -54,27 +53,27 @@ public class ConstructorResolutionTests
     configuration.Bind<ServiceA>();
     configuration.Bind<ServiceB>();
     var injector = configuration.BuildInjector();
-    
+
     // ACT
     var testObject = injector.CreateInstance<ConstructorTestObjectD>();
 
     // ASSERT
-    testObject.UsedCorrectConstructor.Should().BeTrue();
+    Assert.That(testObject.UsedCorrectConstructor, Is.True);
   }
-  
+
   [Test]
   public void CreateInstance_PrefersConstructorWithAttribute()
   {
     // ARRANGE
     var injector = new InjectorConfiguration().BuildInjector();
-    
+
     // ACT
     var testObject = injector.CreateInstance<ConstructorTestObjectE>();
 
     // ASSERT
-    testObject.UsedCorrectConstructor.Should().BeTrue();
+    Assert.That(testObject.UsedCorrectConstructor, Is.True);
   }
-  
+
   [Test]
   public void CreateInstance_CustomConstructorSelection()
   {
@@ -82,15 +81,15 @@ public class ConstructorResolutionTests
     var configuration = new InjectorConfiguration
     {
       // get parameterless ctor
-      ConstructorSelectionStrategy = type => 
+      ConstructorSelectionStrategy = type =>
         type.GetConstructors().First(ctor => ctor.GetParameters().Length is 0),
     };
     var injector = configuration.BuildInjector();
-    
+
     // ACT
     var testObject = injector.CreateInstance<ConstructorTestObjectF>();
 
     // ASSERT
-    testObject.UsedCorrectConstructor.Should().BeTrue();
+    Assert.That(testObject.UsedCorrectConstructor, Is.True);
   }
 }

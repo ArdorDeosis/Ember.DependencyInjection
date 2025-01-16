@@ -1,5 +1,4 @@
 ﻿using Ember.DependencyInjection.Tests.TestTypes;
-using FluentAssertions;
 
 namespace Ember.DependencyInjection.Tests;
 
@@ -16,11 +15,11 @@ public class CachingTests
     // ACT
     var instance1 = injector.Resolve<ServiceA>();
     var instance2 = injector.Resolve<ServiceA>();
-    
+
     // ASSERT
-    instance1.Should().NotBe(instance2);
+    Assert.That(instance1, Is.Not.EqualTo(instance2));
   }
-  
+
   [Test]
   public void SingletonCaching_ReturnsSameInstance()
   {
@@ -32,8 +31,8 @@ public class CachingTests
     // ACT
     var instance1 = injector.Resolve<ServiceA>();
     var instance2 = injector.Resolve<ServiceA>();
-    
+
     // ASSERT
-    instance1.Should().Be(instance2);
+    Assert.That(instance1, Is.EqualTo(instance2));
   }
 }

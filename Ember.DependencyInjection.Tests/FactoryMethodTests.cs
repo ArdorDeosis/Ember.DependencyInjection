@@ -1,5 +1,4 @@
 ﻿using Ember.DependencyInjection.Tests.TestTypes;
-using FluentAssertions;
 
 namespace Ember.DependencyInjection.Tests;
 
@@ -17,9 +16,9 @@ public class FactoryMethodTests
     var instance = injector.Resolve<FactoryMethodTestObject>();
 
     // ASSERT
-    instance.ManualFlag.Should().BeTrue();
+    Assert.That(instance.ManualFlag, Is.True);
   }
-  
+
   [Test]
   public void FactoryMethod_ParametersAreResolved()
   {
@@ -27,7 +26,7 @@ public class FactoryMethodTests
     var configuration = new InjectorConfiguration();
     var serviceInstance = new ServiceA();
     configuration.Bind<IService>().ToInstance(serviceInstance);
-    configuration.Bind<FactoryMethodTestObject>().ToMethod((IService service) => 
+    configuration.Bind<FactoryMethodTestObject>().ToMethod((IService service) =>
       new FactoryMethodTestObject { ManualFlag = service == serviceInstance });
     var injector = configuration.BuildInjector();
 
@@ -35,6 +34,6 @@ public class FactoryMethodTests
     var instance = injector.Resolve<FactoryMethodTestObject>();
 
     // ASSERT
-    instance.ManualFlag.Should().BeTrue();
+    Assert.That(instance.ManualFlag, Is.True);
   }
 }
