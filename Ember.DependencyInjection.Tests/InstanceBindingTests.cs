@@ -1,6 +1,4 @@
-﻿using Ember.DependencyInjection.Tests.TestTypes;
-
-namespace Ember.DependencyInjection.Tests;
+﻿namespace Ember.DependencyInjection.Tests;
 
 public class InstanceBindingTests
 {
