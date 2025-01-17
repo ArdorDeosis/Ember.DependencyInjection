@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github-workflows", "github-
 		.github\workflows\run-tests.yml = .github\workflows\run-tests.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ember.DependencyInjection.PropertyInjection", "Ember.DependencyInjection.PropertyInjection\Ember.DependencyInjection.PropertyInjection.csproj", "{B68FAF19-06C9-42EB-8BD4-E028F064EB63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{71593C22-B4AD-4017-BF68-D2038C73177A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71593C22-B4AD-4017-BF68-D2038C73177A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71593C22-B4AD-4017-BF68-D2038C73177A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B68FAF19-06C9-42EB-8BD4-E028F064EB63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B68FAF19-06C9-42EB-8BD4-E028F064EB63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B68FAF19-06C9-42EB-8BD4-E028F064EB63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B68FAF19-06C9-42EB-8BD4-E028F064EB63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection

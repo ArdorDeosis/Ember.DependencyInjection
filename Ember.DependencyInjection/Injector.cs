@@ -53,20 +53,24 @@ internal class Injector : IInjector
   }
 
   /// <inheritdoc />
-  public T Resolve<T>()
+  public T Resolve<T>() => (T)Resolve(typeof(T));
+
+  /// <inheritdoc />
+  public object Resolve(Type type)
   {
+    ArgumentNullException.ThrowIfNull(type);
     try
     {
-      var instance = resolver.Resolve(typeof(T));
-      if (instance.GetType().IsAssignableTo(typeof(T)))
-        return (T)instance;
+      var instance = resolver.Resolve(type);
+      if (instance.GetType().IsAssignableTo(type))
+        return instance;
       throw new DependencyResolutionException(
-        $"Resolved instance is not assignable to resolved type {typeof(T).FullName}");
+        $"Resolved instance is not assignable to resolved type {type.FullName}");
     }
     catch (Exception exception) when (exception is not DependencyResolutionException)
     {
       throw new DependencyResolutionException(
-        $"Failed to create instance of type {typeof(T).FullName}. See inner exception for more information", exception);
+        $"Failed to create instance of type {type.FullName}. See inner exception for more information", exception);
     }
   }
 

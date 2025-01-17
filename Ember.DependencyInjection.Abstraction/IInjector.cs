@@ -16,7 +16,8 @@ public interface IInjector
   T CreateInstance<T>();
 
   /// <summary>
-  /// Executes the specified factory method to create an instance of type <typeparamref name="T"/>.
+  /// Executes the specified factory method to create an instance of type <typeparamref name="T"/>. Parameters are
+  /// injected.
   /// </summary>
   /// <typeparam name="T">The type of the instance to create.</typeparam>
   /// <param name="factoryMethod">The delegate representing the factory method to execute.</param>
@@ -29,4 +30,11 @@ public interface IInjector
   /// <typeparam name="T">The type of the instance to resolve.</typeparam>
   /// <returns>An instance of the specified type.</returns>
   T Resolve<T>();
+  
+  /// <summary>
+  /// Resolves an instance of the specified type.
+  /// </summary>
+  /// <param name="type">The type of the instance to resolve.</param>
+  /// <returns>An instance of the specified type.</returns>
+  object Resolve(Type type);
 }

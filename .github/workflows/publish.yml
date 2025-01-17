@@ -32,6 +32,7 @@ jobs:
         run: |
           dotnet pack ./Ember.DependencyInjection/Ember.DependencyInjection.csproj --configuration Release --output ./packages
           dotnet pack ./Ember.DependencyInjection.Abstraction/Ember.DependencyInjection.Abstraction.csproj --configuration Release --output ./packages
+          dotnet pack ./Ember.DependencyInjection.PropertyInjection/Ember.DependencyInjection.PropertyInjection.csproj --configuration Release --output ./packages
           
       - name: Push to NuGet
         env:
@@ -39,6 +40,7 @@ jobs:
         run: |
           dotnet nuget push "./packages/Ember.DependencyInjection.${{ env.VERSION }}.nupkg" --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
           dotnet nuget push "./packages/Ember.DependencyInjection.Abstraction.${{ env.VERSION }}.nupkg" --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+          dotnet nuget push "./packages/Ember.DependencyInjection.PropertyInjection.${{ env.VERSION }}.nupkg" --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
 
       - name: Set Version Tag
         run: |
