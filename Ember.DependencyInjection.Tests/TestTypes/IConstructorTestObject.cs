@@ -1,4 +1,4 @@
-﻿namespace Ember.DependencyInjection.Tests.TestTypes;
+﻿namespace Ember.DependencyInjection.Tests;
 
 public interface IConstructorTestObject
 {
