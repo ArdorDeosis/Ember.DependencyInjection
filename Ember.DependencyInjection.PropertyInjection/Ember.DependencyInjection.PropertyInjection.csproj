@@ -8,4 +8,8 @@
     <ProjectReference Include="..\Ember.DependencyInjection.Abstraction\Ember.DependencyInjection.Abstraction.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="PackageReadme.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+
 </Project>
