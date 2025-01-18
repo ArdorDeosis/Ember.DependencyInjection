@@ -1,0 +1,1 @@
+Abstraction layer for `Fyremoss.DependencyInjection`. See repository for more information.

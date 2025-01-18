@@ -25,22 +25,22 @@ jobs:
       - name: Get Version
         id: get_version
         run: |
-          VERSION=$(dotnet msbuild ./Ember.DependencyInjection/Ember.DependencyInjection.csproj -t:GetPackageVersion -nologo | grep -oP '[^\s]+')
+          VERSION=$(dotnet msbuild ./Fyremoss.DependencyInjection/Fyremoss.DependencyInjection.csproj -t:GetPackageVersion -nologo | grep -oP '[^\s]+')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name:
         run: |
-          dotnet pack ./Ember.DependencyInjection/Ember.DependencyInjection.csproj --configuration Release --output ./packages
-          dotnet pack ./Ember.DependencyInjection.Abstraction/Ember.DependencyInjection.Abstraction.csproj --configuration Release --output ./packages
-          dotnet pack ./Ember.DependencyInjection.PropertyInjection/Ember.DependencyInjection.PropertyInjection.csproj --configuration Release --output ./packages
+          dotnet pack ./Fyremoss.DependencyInjection/Fyremoss.DependencyInjection.csproj --configuration Release --output ./packages
+          dotnet pack ./Fyremoss.DependencyInjection.Abstraction/Fyremoss.DependencyInjection.Abstraction.csproj --configuration Release --output ./packages
+          dotnet pack ./Fyremoss.DependencyInjection.PropertyInjection/Fyremoss.DependencyInjection.PropertyInjection.csproj --configuration Release --output ./packages
           
       - name: Push to NuGet
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: |
-          dotnet nuget push "./packages/Ember.DependencyInjection.${{ env.VERSION }}.nupkg" --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
-          dotnet nuget push "./packages/Ember.DependencyInjection.Abstraction.${{ env.VERSION }}.nupkg" --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
-          dotnet nuget push "./packages/Ember.DependencyInjection.PropertyInjection.${{ env.VERSION }}.nupkg" --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+          dotnet nuget push "./packages/Fyremoss.DependencyInjection.${{ env.VERSION }}.nupkg" --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+          dotnet nuget push "./packages/Fyremoss.DependencyInjection.Abstraction.${{ env.VERSION }}.nupkg" --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+          dotnet nuget push "./packages/Fyremoss.DependencyInjection.PropertyInjection.${{ env.VERSION }}.nupkg" --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
 
       - name: Set Version Tag
         run: |

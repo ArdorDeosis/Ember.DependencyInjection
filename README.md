@@ -1,4 +1,4 @@
-# Ember Dependency Injection
+# Fyremoss Dependency Injection
 
 A C# dependency injection framework.
 

@@ -1,0 +1,1 @@
+Extension of `Fyremoss.DependencyInjection` adding property injection. See repository for more information.

@@ -1,1 +1,0 @@
-Abstraction layer for `Ember.DependencyInjection`. See repository for more information.

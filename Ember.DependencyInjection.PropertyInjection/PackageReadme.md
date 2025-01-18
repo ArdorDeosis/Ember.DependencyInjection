@@ -1,1 +1,0 @@
-Extension of `Ember.DependencyInjection` adding property injection. See repository for more information.
