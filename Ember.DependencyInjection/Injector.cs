@@ -7,12 +7,15 @@ internal class Injector : IInjector
 {
   private readonly DependencyResolver resolver;
   private readonly CachedConstructorSelector constructorSelector;
+  private readonly IReadOnlySet<CreationHook> creationHooks;
 
-  internal Injector(ContractRegistry registry, ConstructorSelector constructorSelector)
+  internal Injector(ContractRegistry registry, ConstructorSelector constructorSelector, 
+    IReadOnlySet<CreationHook> creationHooks)
   {
+    this.creationHooks = creationHooks;
+    this.constructorSelector = new CachedConstructorSelector(constructorSelector);
     registry.Add<IInjector>().ToInstance(this);
     resolver = new DependencyResolver(registry.MakeContractSet(this));
-    this.constructorSelector = new CachedConstructorSelector(constructorSelector);
   }
 
   /// <inheritdoc />
@@ -24,7 +27,10 @@ internal class Injector : IInjector
     try
     {
       var parameters = ResolveParameterList(constructor);
-      return (T)constructor.Invoke(parameters);
+      var instance = (T)constructor.Invoke(parameters);
+      foreach (var hook in creationHooks)
+        hook.Invoke(instance!);
+      return instance;
     }
     catch (Exception exception) when (exception is not DependencyResolutionException)
     {
