@@ -6,6 +6,7 @@
 public class InjectorConfiguration : IInjectorConfiguration
 {
   private readonly ContractRegistry registry = new();
+  private readonly HashSet<CreationHook> hooks = [];
 
   /// <inheritdoc />
   public ConstructorSelector ConstructorSelectionStrategy { private get; set; } = 
@@ -31,5 +32,8 @@ public class InjectorConfiguration : IInjectorConfiguration
   }
 
   /// <inheritdoc />
-  public IInjector BuildInjector() => new Injector(registry, ConstructorSelectionStrategy);
+  public void AddCreationHook(CreationHook creationHook) => hooks.Add(creationHook);
+
+  /// <inheritdoc />
+  public IInjector BuildInjector() => new Injector(registry, ConstructorSelectionStrategy, new HashSet<CreationHook>(hooks));
 }
