@@ -29,7 +29,7 @@ internal class Injector : IInjector
       var parameters = ResolveParameterList(constructor);
       var instance = (T)constructor.Invoke(parameters);
       foreach (var hook in creationHooks)
-        hook.Invoke(instance!);
+        hook.Invoke(this, instance!);
       return instance;
     }
     catch (Exception exception) when (exception is not DependencyResolutionException)

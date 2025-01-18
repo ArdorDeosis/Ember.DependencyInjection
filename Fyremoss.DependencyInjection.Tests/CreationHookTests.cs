@@ -9,7 +9,7 @@ public class CreationHookTests
     var hookExecuted = false;
     var configuration = new InjectorConfiguration();
     configuration.Bind<IService>().To<ServiceA>().AsTransient();
-    configuration.AddCreationHook(_ => hookExecuted = true);
+    configuration.AddCreationHook((_, _) => hookExecuted = true);
     var injector = configuration.BuildInjector();
     
     // ACT
